@@ -4,7 +4,7 @@
 
 /*! \page README_HowToRun How to build and run an example
 
-All novice, basic and most of extended examples have a similar structure.
+All novice basic and most of extended examples have a similar structure.
 The main () function is included in \em exampleXYZ.cc in the example top directory
 and the example source code is structered in \em include and \em src subdirectories.
 When the example is built, the executable takes the same name as the file with
