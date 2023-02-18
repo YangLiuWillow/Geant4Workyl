@@ -177,7 +177,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
                 
   // Set Shape2 as scoring volume
   //
-  fScoringVolume = logicShape2;
+  //fScoringVolume = logicShape2;
 
   //
   //always return the physical World
