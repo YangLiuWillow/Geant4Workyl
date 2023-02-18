@@ -59,10 +59,10 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   // Get nist material manager
   G4NistManager* nist = G4NistManager::Instance();
   
-  // Envelope parameters
+  // Scintillator parameters
   //
-  G4double env_sizeXY = 20*cm, env_sizeZ = 30*cm;
-  G4Material* env_mat = nist->FindOrBuildMaterial("G4_WATER");
+  G4double scin_sizeXYZ = 10*mm
+  G4Material* scin_mat = nist->FindOrBuildMaterial("G4_POLYSTYRENE");
    
   // Option to switch on/off checking of volumes overlaps
   //
@@ -71,13 +71,12 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   //     
   // World
   //
-  G4double world_sizeXY = 1.2*env_sizeXY;
-  G4double world_sizeZ  = 1.2*env_sizeZ;
+  G4double world_sizeXYZ = 1.2*scin_sizeXYZ;
   G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
   
   G4Box* solidWorld =    
     new G4Box("World",                       //its name
-       0.5*world_sizeXY, 0.5*world_sizeXY, 0.5*world_sizeZ);     //its size
+       0.5*world_sizeXYZ, 0.5*world_sizeXYZ, 0.5*world_sizeXYZ);     //its size
       
   G4LogicalVolume* logicWorld =                         
     new G4LogicalVolume(solidWorld,          //its solid
@@ -95,26 +94,28 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
                       checkOverlaps);        //overlaps checking
                      
   //     
-  // Envelope
+  // Scintillator
   //  
-  G4Box* solidEnv =    
-    new G4Box("Envelope",                    //its name
-        0.5*env_sizeXY, 0.5*env_sizeXY, 0.5*env_sizeZ); //its size
+  G4Box* solidScin =    
+    new G4Box("solidScintillator",                    //its name
+        scin_sizeXYZ, scin_sizeXYZ, scin_sizeXYZ); //its size
       
-  G4LogicalVolume* logicEnv =                         
-    new G4LogicalVolume(solidEnv,            //its solid
-                        env_mat,             //its material
-                        "Envelope");         //its name
+  G4LogicalVolume* logicScin =                         
+    new G4LogicalVolume(solidScin,            //its solid
+                        scin_mat,             //its material
+                        "logicalScintillator");         //its name
                
-  new G4PVPlacement(0,                       //no rotation
+  G4VPhysicalVolume* physScin = new G4PVPlacement(0,  //no rotation
                     G4ThreeVector(),         //at (0,0,0)
-                    logicEnv,                //its logical volume
-                    "Envelope",              //its name
+                    logicScin,                //its logical volume
+                    "physicalScintillator",              //its name
                     logicWorld,              //its mother  volume
                     false,                   //no boolean operation
                     0,                       //copy number
                     checkOverlaps);          //overlaps checking
  
+  fScoringVolume = logicScin; //set scintillator as scoring volume
+ '''
   //     
   // Shape 1
   //  
@@ -177,7 +178,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   // Set Shape2 as scoring volume
   //
   fScoringVolume = logicShape2;
-
+'''
   //
   //always return the physical World
   //
@@ -185,3 +186,10 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+//in .cc file
+//void MyDetectorConstruction::ConstructScintillator()
+//{
+//  solidScintillator = new G4Box("solidScintillator", 10*cm, 20*cm, 30*cm, 0*deg, 360*deg)
+//}

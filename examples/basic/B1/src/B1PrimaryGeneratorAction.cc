@@ -43,7 +43,7 @@
 
 B1PrimaryGeneratorAction::B1PrimaryGeneratorAction()
 : G4VUserPrimaryGeneratorAction(),
-  fParticleGun(0), 
+  fParticleGun(0),
   fEnvelopeBox(0)
 {
   G4int n_particle = 1;
@@ -53,10 +53,8 @@ B1PrimaryGeneratorAction::B1PrimaryGeneratorAction()
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
   G4String particleName;
   G4ParticleDefinition* particle
-    = particleTable->FindParticle(particleName="gamma");
+    = particleTable->FindParticle(particleName="proton");
   fParticleGun->SetParticleDefinition(particle);
-  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
-  fParticleGun->SetParticleEnergy(6.*MeV);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -68,9 +66,9 @@ B1PrimaryGeneratorAction::~B1PrimaryGeneratorAction()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void B1PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
+void B1PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)//, G4double protonEnergy)
 {
-  //this function is called at the begining of ecah event
+  //this function is called at the begining of each event
   //
 
   // In order to avoid dependence of PrimaryGeneratorAction
@@ -101,14 +99,20 @@ void B1PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   }
 
   G4double size = 0.8; 
-  G4double x0 = size * envSizeXY * (G4UniformRand()-0.5);
-  G4double y0 = size * envSizeXY * (G4UniformRand()-0.5);
+  G4double x0 = size * envSizeXY * (G4UniformRand()-0.5); //change direction of particle generation to have a probability of being
+  G4double y0 = size * envSizeXY * (G4UniformRand()-0.5); //cos^(phi) later, where phi is angle from x-axis to particle (I think)
   G4double z0 = -0.5 * envSizeZ;
   
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
+  fParticleGun->SetParticleEnergy(100.*MeV); //will need to use a range of proton energies later, ranging from 0.1 MeV to 300 MeV, protonEnergy
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.)); //change momentum direction later as well, so it's random to
+                                                                      //simulate how the particles will be moving in random directions for angle of incidence
 
   fParticleGun->GeneratePrimaryVertex(anEvent);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+//G4Scintillation* scintillationProcess = new G4Scintillation("scint");
+//G4Box *solidScintillator //in .hh file
 
