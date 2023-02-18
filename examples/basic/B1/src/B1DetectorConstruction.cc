@@ -76,7 +76,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
   
   G4Box* solidWorld =    
     new G4Box("World",                       //its name
-       0.5*world_sizeXYZ, 0.5*world_sizeXYZ, 0.5*world_sizeXYZ);     //its size
+       world_sizeXYZ, world_sizeXYZ, world_sizeXYZ);     //its size
       
   G4LogicalVolume* logicWorld =                         
     new G4LogicalVolume(solidWorld,          //its solid

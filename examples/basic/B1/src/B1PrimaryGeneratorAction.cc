@@ -101,10 +101,10 @@ void B1PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)//, G4double p
   G4double size = 0.8; 
   G4double x0 = size * envSizeXY * (G4UniformRand()-0.5); //change direction of particle generation to have a probability of being
   G4double y0 = size * envSizeXY * (G4UniformRand()-0.5); //cos^(phi) later, where phi is angle from x-axis to particle (I think)
-  G4double z0 = -0.5 * envSizeZ;
+  G4double z0 = -3 * envSizeZ;
   
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
-  fParticleGun->SetParticleEnergy(100.*MeV); //will need to use a range of proton energies later, ranging from 0.1 MeV to 300 MeV, protonEnergy
+  fParticleGun->SetParticleEnergy(1000.*MeV); //will need to use a range of proton energies later, ranging from 0.1 MeV to 300 MeV, protonEnergy
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.)); //change momentum direction later as well, so it's random to
                                                                       //simulate how the particles will be moving in random directions for angle of incidence
 
