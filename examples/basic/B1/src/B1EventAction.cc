@@ -64,7 +64,7 @@ void B1EventAction::EndOfEventAction(const G4Event*)
 
   // output statistics to histogram (?)
   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
-  analysisManager->FillH1(0, fEdep);
+  analysisManager->FillH1(2, fEdep);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
