@@ -1,0 +1,18 @@
+#
+#Source definition
+#
+/gps/particle  proton
+/gps/ene/type  Pow
+/gps/ene/alpha  -1.000000E+00
+/gps/ene/min   1.000000E-01 MeV
+/gps/ene/max   3.000000E+02 MeV
+/gps/ang/type cos
+/gps/ang/mintheta    0.000E+00 deg
+/gps/ang/maxtheta    9.000E+01 deg
+/gps/source/list 
+
+#
+#Normalisation
+#
+/control/alias  NORM_FACTOR_SPECTRUM "            NaN "
+/control/alias  NORM_FACTOR_ANGULAR "   2.500000E-01 "

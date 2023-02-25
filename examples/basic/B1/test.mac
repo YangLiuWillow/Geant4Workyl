@@ -1,0 +1,58 @@
+# SPENVIS generated macrofile for MULASSIS
+/geometry/layer/delete  0
+/geometry/material/addNIST G4_Al
+/geometry/material/addNIST G4_POLYSTYRENE
+/geometry/layer/shape slab
+/geometry/layer/add  0 G4_POLYSTYRENE   5    1.000E+01 mm
+/geometry/layer/add  1 Vacuum   1    5.000E-01 mm
+/geometry/layer/add  2 G4_Al   2    7.000E+00 mm
+# Total thickness =     17.500 mm
+/analysis/file spenvis
+#
+# Analysis definition
+#
+/analysis/phs/add   1
+/analysis/phs/add   2
+/analysis/phs/add   3
+/analysis/phs/energy/default
+/geometry/update
+#
+# Physics scenario
+#
+/phys/scenario QBBC
+/phys/showscen
+#
+# Global cuts-in-range
+#
+/phys/cuts/global/default    1.000E+00 um
+#
+# Region cuts-in-range
+#
+#
+# Source definition
+#
+/control/execute spenvis_gps.g4mac
+#
+# Normalisation
+#
+/control/multiply  NORM_FACTOR {NORM_FACTOR_SPECTRUM}{NORM_FACTOR_ANGULAR}
+/control/listAlias
+/analysis/normalise {NORM_FACTOR} cm2
+#
+# Visualisation
+#
+/vis/open DAWNFILE
+/vis/scene/create
+/vis/viewer/zoom    20.00
+/vis/viewer/set/viewpointThetaPhi 90. 180.
+/vis/viewer/set/style s
+/vis/drawVolume
+/vis/scene/endOfEventAction accumulate
+/tracking/storeTrajectory 1
+/vis/scene/add/trajectories
+#
+# Run control
+#
+/event/printModulo         10
+/run/cputime    1.410E+02
+/run/beamOn        100
