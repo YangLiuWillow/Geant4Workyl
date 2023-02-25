@@ -33,6 +33,8 @@
 #include "G4Event.hh"
 #include "G4RunManager.hh"
 
+#include "HistoManager.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 B1EventAction::B1EventAction(B1RunAction* runAction)
@@ -59,6 +61,10 @@ void B1EventAction::EndOfEventAction(const G4Event*)
 {   
   // accumulate statistics in run action
   fRunAction->AddEdep(fEdep);
+
+  // output statistics to histogram (?)
+  G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
+  analysisManager->FillH1(0, fEdep);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
